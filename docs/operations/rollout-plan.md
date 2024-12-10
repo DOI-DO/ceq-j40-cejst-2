@@ -27,10 +27,22 @@ of the CEJST data in that bucket without affecting the data being served by
 the existing website
 
 TODO: Validate the hypotheses that
-  - the frontend website pulls its backend data from versioned paths
-  - the data pipeline that builds the backend data can be configured
+  - [X] the frontend website pulls its backend data from versioned paths
+  - [X] the data pipeline that builds the backend data can be configured
     so that it will not overwrite any of the existing data in the same
     bucket
+
+The deploy-backend-main.yml Github workflow builds the scoring and deploys
+it to the S3 data bucket. We want to have control of when that workflow runs
+so that there are no inadvertent changes to the scoring in the bucket. When
+we want to run the build and deploy workflow for the scoring, we can do
+so by clicking the button in the Github web UI.
+
+The rollout sequence will be (1) freezing the code in `data/` with the final
+v2 changes, then (2) analyzing the resulting changes from v1 to v2 in order to
+fully bless the v2 results. Once the analysis and approval is complete we can
+(3) run the backend build and deploy workflow to install the final version of
+the CEJST scores on the S3 data bucket.
 
 ## Frontend app rollout
 
@@ -43,8 +55,11 @@ display of the updated data using a staging URL like
 <random-string-of-letters>.cloudfront.net.
 
 TODO: Get new AWS resources
-  - A new website S3 bucket
-  - A new Cloudfront distribution that serves that S3 bucket
+  - [X] A new website S3 bucket
+  - [X] A new Cloudfront distribution that serves that S3 bucket
+
+After the v2 backend is frozen, approved, and deployed, we will move on
+to testing the frontend with that data at the staging URL.
 
 ## Release day
 

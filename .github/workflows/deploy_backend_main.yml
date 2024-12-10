@@ -1,9 +1,5 @@
 name: Deploy Backend Main
-on:
-  push:
-    branches: [main]
-    paths:
-      - "data/**"
+on: workflow_dispatch
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
